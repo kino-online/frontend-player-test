@@ -1,0 +1,12 @@
+.view {
+  display: flex;
+  flex-direction: column;
+
+  app-player {
+    margin: 0 auto;
+  }
+}
+
+.view-info__title {
+  text-align: left;
+}
