@@ -21,7 +21,7 @@ export type VideoDisplayData = {
 })
 export class PlayerComponent implements AfterViewInit {
   @Input() video!: VideoDisplayData;
-  @Input() autoplay: boolean = false;
+  @Input() autoplay = false;
 
   @ViewChild('video') videoElement!: ElementRef<HTMLVideoElement>;
   player?: Player;
@@ -34,14 +34,16 @@ export class PlayerComponent implements AfterViewInit {
       this.player = videojs(this.videoElement.nativeElement, {
         autoplay: this.autoplay,
         controls: true,
-        height: '600px',
+        height: visualViewport?.height,
+        width: visualViewport?.width,
         sources: this.video.sources,
         poster: this.video.posterUrl,
       });
     });
+    this.player?.currentTime(100);
   }
 
-  @HostListener('window:keyup.space')
+  @HostListener('keyup.space')
   togglePlay() {
     if (!this.player) return;
 
