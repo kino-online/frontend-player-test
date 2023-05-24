@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, NgZone, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
-import { debounce, debounceTime, fromEvent, mergeWith, throttleTime } from 'rxjs';
-import { environment } from 'src/environment/environment';
+import { filter, fromEvent, map, mergeWith, throttleTime } from 'rxjs';
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
+import { PlayerStatsService } from '../player-stats.service';
 
 export type VideoDisplayData = {
   sources: {
@@ -27,23 +27,27 @@ export class PlayerComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('video') videoElement!: ElementRef<HTMLVideoElement>;
   player?: Player;
-  socket: WebSocket;
+  
 
-  constructor(private zone: NgZone) {
-    this.socket = new WebSocket(environment.WEBSOCKET_URL as string);
+  constructor(
+    private zone: NgZone,
+    private playerStatsService: PlayerStatsService,
+  ) {
   }
 
   ngOnDestroy(): void {
-    this.socket.close();
+    this.playerStatsService.close();
   }
 
   ngAfterViewInit(): void {
     this.zone.runOutsideAngular(() => {
+      if (typeof visualViewport === undefined || !window.visualViewport) return;
+      
       this.player = videojs(this.videoElement.nativeElement, {
         autoplay: this.autoplay,
         controls: true,
-        height: visualViewport?.height,
-        width: visualViewport?.width,
+        height: window.visualViewport.height,
+        width: window.visualViewport.width,
         sources: this.video.sources,
         poster: this.video.posterUrl,
       });
@@ -52,17 +56,13 @@ export class PlayerComponent implements AfterViewInit, OnDestroy {
         .pipe(throttleTime(2000));
       const paused$ = fromEvent(this.player, 'paused');
 
-      timeUpdate$.pipe(mergeWith(paused$))
-        .subscribe(() => {
-          this.sendPlayerTime();
-        });
+      timeUpdate$.pipe(
+        mergeWith(paused$),
+        map(() => this.player?.currentTime()),
+        filter(Boolean)
+      )
+        .subscribe(this.playerStatsService.progressPipe$);
     });
-  }
-
-  private sendPlayerTime() {
-    this.socket.send(JSON.stringify({
-      time: this.player?.currentTime(),
-    }));
   }
 
   @HostListener('keyup.space')
