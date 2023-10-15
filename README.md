@@ -1,27 +1,52 @@
 # iLampa
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.1.
+This template should help get you started developing with Vue 3 in Vite.
 
-## Development server
+## Project Setup
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```sh
+yarn install
+```
 
-## Code scaffolding
+### Compile and Hot-Reload for Development
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```sh
+yarn run dev
+```
 
-## Build
+### Type-Check, Compile and Minify for Production
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```sh
+yarn run build
+```
 
-## Running unit tests
+### Run Unit Tests with [Vitest](https://vitest.dev/)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```sh
+yarn run test:unit
+```
 
-## Running end-to-end tests
+### Run End-to-End Tests with [Playwright](https://playwright.dev)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```sh
+# Install browsers for the first run
+npx playwright install
 
-## Further help
+# When testing on CI, must build the project first
+yarn run build
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Runs the end-to-end tests
+yarn run test:e2e
+# Runs the tests only on Chromium
+yarn run test:e2e -- --project=chromium
+# Runs the tests of a specific file
+yarn run test:e2e -- tests/example.spec.ts
+# Runs the tests in debug mode
+yarn run test:e2e -- --debug
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+yarn run lint
+```
