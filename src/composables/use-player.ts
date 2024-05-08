@@ -37,6 +37,7 @@ export const usePlayer = (
     if (!playerRef.value) return;
 
     player.value = videojs(playerRef.value, options);
+    player.value.focus();
   });
 
   return { player };
