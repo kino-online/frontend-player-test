@@ -3,7 +3,7 @@ import AppPlayer from './components/app-player.vue';
 import SourceInput from '@/components/source-input.vue';
 import { ref } from 'vue';
 
-const source = ref('https://d2zihajmogu5jn.cloudfront.net/sintel/master.m3u8')
+const source = ref('https://d2zihajmogu5jn.cloudfront.net/elephantsdream/hls/ed_hd.m3u8')
 </script>
 
 <template>
