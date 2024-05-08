@@ -21,6 +21,9 @@ const defaultOptions: PlayerOptions = {
     durationDisplay: true,
     currentTimeDisplay: true,
   },
+  userActions: {
+    hotkeys: true,
+  }
 };
 
 export const usePlayer = (
