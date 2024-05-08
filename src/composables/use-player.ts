@@ -14,12 +14,12 @@ const defaultOptions: PlayerOptions = {
   sources: [],
   controlBar: {
     progressControl: true,
-    fullscreenToggle: false,
+    fullscreenToggle: true,
     pictureInPictureToggle: false,
-    remainingTimeDisplay: false,
+    remainingTimeDisplay: true,
     seekToLive: false,
-    durationDisplay: false,
-    currentTimeDisplay: false,
+    durationDisplay: true,
+    currentTimeDisplay: true,
   },
 };
 
