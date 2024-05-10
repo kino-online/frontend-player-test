@@ -10,6 +10,7 @@
       name="source"
       id="source"
       required
+      @keyup.enter="setSource"
     />
     <button
       type="button"
