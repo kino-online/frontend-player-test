@@ -7,7 +7,7 @@ const source = ref('https://d2zihajmogu5jn.cloudfront.net/elephantsdream/hls/ed_
 </script>
 
 <template>
-  <div style="width: 70%; margin: 0 auto">
+  <div class="app">
     <source-input v-model="source" />
 
     <app-player :source="{
@@ -16,3 +16,10 @@ const source = ref('https://d2zihajmogu5jn.cloudfront.net/elephantsdream/hls/ed_
     }" />
   </div>
 </template>
+
+<style scoped>
+.app {
+  width: 70%;
+  margin: 0 auto;
+}
+</style>
