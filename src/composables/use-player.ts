@@ -37,6 +37,17 @@ export const usePlayer = (
     if (!playerRef.value) return;
 
     player.value = videojs(playerRef.value, options);
+    player.value.on('xhr-hooks-ready', () => {
+      (player.value!.tech() as any).vhs.xhr.onRequest((options: any) => {
+        if (!options.headers) {
+          options.headers = {};
+        }
+        options.headers['x-minio-extract'] = 'true';
+
+        return options;
+      });
+    });
+
     player.value.focus();
   });
 
