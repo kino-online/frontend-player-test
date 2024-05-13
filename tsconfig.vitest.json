@@ -5,6 +5,6 @@
     "composite": true,
     "lib": [],
     "types": ["node", "jsdom"],
-    "strict": true
+    "strict": false
   }
 }
