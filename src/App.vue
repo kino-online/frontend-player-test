@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import AppPlayer from './components/app-player.vue';
+
 import SourceInput from '@/components/source-input.vue';
-import { ref } from 'vue';
+import { defineAsyncComponent, ref } from 'vue';
+import PlayerLoader from '@/components/player-loader.vue';
+
+const AppPlayer = defineAsyncComponent(() => import('./components/app-player.vue'));
 
 const source = ref(import.meta.env.VITE_S3_URL);
 </script>
@@ -10,10 +13,15 @@ const source = ref(import.meta.env.VITE_S3_URL);
   <div class="app">
     <source-input v-model="source" />
 
-    <app-player :source="{
-      src: source,
-      type: 'application/x-mpegURL'
-    }" />
+    <suspense>
+      <app-player :source="{
+        src: source,
+        type: 'application/x-mpegURL'
+      }" />
+      <template #fallback>
+        <player-loader />
+      </template>
+    </suspense>
   </div>
 </template>
 
