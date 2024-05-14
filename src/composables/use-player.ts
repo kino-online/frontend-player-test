@@ -66,6 +66,10 @@ function createPlayer(element: HTMLElement, options: Partial<PlayerOptions>): Pl
     bindEventListeners(player);
   });
 
+  if (import.meta.env.DEV) {
+    (window as any).p = player;
+  }
+
   return player;
 }
 
@@ -74,6 +78,7 @@ function bindEventListeners(player: Player) {
   const handlers: UnitOfWork[] = [
     handleSkipButtons,
     handleToStartButton,
+    handleVolumeButtons,
   ];
 
   root.addEventListener('keydown', (event: KeyboardEvent) => {
@@ -96,6 +101,18 @@ function handleSkipButtons(event: KeyboardEvent, player: Player): undefined | tr
   const SKIP_AMOUNT = 10;
   const direction = event.key === 'ArrowLeft' ? -1 : 1;
   player.currentTime(player.currentTime() + direction * SKIP_AMOUNT);
+
+  return true;
+}
+
+function handleVolumeButtons(event: KeyboardEvent, player: Player): undefined | true {
+  if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') {
+    return;
+  }
+
+  const VOLUME_DELTA = 0.1;
+  const direction = event.key === 'ArrowDown' ? -1 : 1;
+  player.volume(player.volume() + VOLUME_DELTA * direction);
 
   return true;
 }
