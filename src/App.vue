@@ -3,7 +3,7 @@ import AppPlayer from './components/app-player.vue';
 import SourceInput from '@/components/source-input.vue';
 import { ref } from 'vue';
 
-const source = ref(import.meta.env.VITE_S3_URL)
+const source = ref(import.meta.env.VITE_S3_URL);
 </script>
 
 <template>

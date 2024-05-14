@@ -40,7 +40,7 @@ const setSource = () => {
   if (!sourceRef.value?.reportValidity()) return;
 
   emit('update:modelValue', sourceModel.value);
-}
+};
 </script>
 
 <style scoped>
