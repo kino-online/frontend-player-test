@@ -7,7 +7,7 @@ export type Player = ReturnType<typeof videojs>;
 
 type UnitOfWork = (...args: any[]) => undefined | true;
 
-const defaultOptions: PlayerOptions = {
+export const defaultOptions: PlayerOptions = {
   aspectRatio: '16:9',
   height: window.outerHeight,
   width: window.outerWidth,
@@ -73,7 +73,7 @@ function createPlayer(element: HTMLElement, options: Partial<PlayerOptions>): Pl
   return player;
 }
 
-function bindEventListeners(player: Player) {
+export function bindEventListeners(player: Player) {
   const root = player.el();
   const handlers: UnitOfWork[] = [
     handleSkipButtons,
