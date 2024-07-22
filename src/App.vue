@@ -6,7 +6,7 @@ import PlayerLoader from '@/components/player-loader.vue';
 
 const AppPlayer = defineAsyncComponent(() => import('./components/app-player.vue'));
 
-const source = ref(import.meta.env.VITE_S3_URL);
+const source = ref(import.meta.env.VITE_DEFAULT_MASTER_URL);
 </script>
 
 <template>
