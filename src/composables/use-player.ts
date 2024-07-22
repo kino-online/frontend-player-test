@@ -79,6 +79,7 @@ export function bindEventListeners(player: Player) {
     handleSkipButtons,
     handleToStartButton,
     handleVolumeButtons,
+    handleForwardBack,
   ];
 
   root.addEventListener('keydown', (event: KeyboardEvent) => {
@@ -113,6 +114,44 @@ function handleVolumeButtons(event: KeyboardEvent, player: Player): undefined | 
   const VOLUME_DELTA = 0.1;
   const direction = event.key === 'ArrowDown' ? -1 : 1;
   player.volume(player.volume() + VOLUME_DELTA * direction);
+
+  return true;
+}
+
+function handleForwardBack(event: KeyboardEvent, player: Player): undefined | true {
+  if (event.code !== 'Comma' && event.code !== 'Period') {
+    console.log('wrong event');
+    return;
+  }
+
+  if (!player.paused()) {
+    console.log('not paused');
+    return;
+  }
+
+  const tech = player.tech() as any;
+  const { vhs } = tech;
+  if (!vhs) {
+    return;
+  }
+
+  let frameRate = 24; // assume 24 fps by default
+  const currentTime = player.currentTime();
+  const { attributes } = tech.vhs.playlists.media();
+
+  if (attributes['FRAME-RATE']) {
+    frameRate = Number(attributes['FRAME-RATE']);
+  }
+
+  const frameLength = 1 / frameRate;
+
+  const currentFrame = Math.ceil(currentTime / frameLength);
+  const newFrame = event.code === 'Comma'
+    ? currentFrame - 1
+    : currentFrame + 1;
+  const newTime = newFrame * frameLength;
+
+  player.currentTime(newTime);
 
   return true;
 }
