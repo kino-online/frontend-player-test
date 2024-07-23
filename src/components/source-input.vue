@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps<{
   modelValue: string;
@@ -34,6 +34,10 @@ const emit = defineEmits<{
 
 const sourceModel = ref(props.modelValue);
 const sourceRef = ref<HTMLInputElement>();
+
+watch(() => props.modelValue, newValue => {
+  sourceModel.value = newValue;
+});
 
 const setSource = () => {
   if (!sourceModel.value) return;
