@@ -5,12 +5,27 @@ import videojs from 'video.js';
 export type PlayerOptions = Parameters<typeof videojs>[1];
 export type Player = ReturnType<typeof videojs>;
 
+export type PlayerSource = {
+  src: string;
+  type: string;
+}
+
+export type Playlist = {
+  items: PlaylistItem[]
+}
+
+export type PlaylistItem = {
+  url: string;
+  name: string;
+  preview?: string;
+}
+
 type UnitOfWork = (...args: any[]) => undefined | true;
 
 export const defaultOptions: PlayerOptions = {
   aspectRatio: '16:9',
-  height: window.outerHeight,
-  width: window.outerWidth,
+  height: window.outerHeight * 0.7,
+  width: window.outerWidth * 0.7,
   controls: true,
   autoplay: false,
   sources: [],
