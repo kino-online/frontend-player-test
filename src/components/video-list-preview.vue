@@ -5,7 +5,7 @@
     :disabled="active"
     @click="$emit('click', video)"
   >
-    <img class="preview-image" :src="video.preview" :alt="video.name">
+<!--    <img class="preview-image" :src="video.preview" :alt="video.name">-->
     <span class="body">
       <span class="title">{{ video.name }}</span>
     </span>
@@ -31,7 +31,7 @@ defineEmits<{
   background-color: transparent;
   border: none;
   padding: 0;
-  color: #fff;
+  color: #000000;
   display: flex;
   cursor: pointer;
   width: 100%;
