@@ -24,6 +24,7 @@ watchEffect(() => {
   if (!player.value) return;
 
   player.value.src(sourceModel.value);
+  player.value.focus();
 });
 </script>
 
